@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { useSelector } from "react-redux";
-import { authSelector } from "./redux.login";
+
+const API_URL = "http://13.61.181.126:3000";
 
 const INITIAL_STATE = {
   todos: [],
@@ -13,7 +13,7 @@ export const getAsyncThunk = createAsyncThunk(
     const token = state.authReducer.token;
 
     try {
-      const response = await fetch("http://localhost:3000/api/todos", {
+      const response = await fetch(`${API_URL}/api/todos`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -38,7 +38,7 @@ export const postAsyncThunk = createAsyncThunk(
     const state = thunkAPI.getState();
     const token = state.authReducer.token;
     try {
-      const response = await fetch("http://localhost:3000/api/todos/add", {
+      const response = await fetch(`${API_URL}/api/todos/add`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -61,16 +61,14 @@ export const toggleAsyncThunk = createAsyncThunk(
     try {
       const state = thunkAPI.getState();
       const token = state.authReducer.token;
-      const response = await fetch(
-        `http://localhost:3000/api/todos/toggle/${id}`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            authorization: token,
-          },
-        }
-      );
+
+      const response = await fetch(`${API_URL}/api/todos/toggle/${id}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          authorization: token,
+        },
+      });
       const data = await response.json();
       return data;
     } catch (error) {
@@ -83,16 +81,13 @@ export const deleteAsyncThunk = createAsyncThunk(
   async (id, thunkAPI) => {
     const state = thunkAPI.getState();
     const token = state.authReducer.token;
-    const response = await fetch(
-      `http://localhost:3000/api/todos/delete/${id}`,
-      {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-          authorization: token,
-        },
-      }
-    );
+    const response = await fetch(`${API_URL}/api/todos/delete/${id}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        authorization: token,
+      },
+    });
     const data = await response.json();
     return data;
   }

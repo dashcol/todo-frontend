@@ -1,6 +1,9 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { useState } from "react";
 
+const API_URL = "http://13.61.181.126:3000";
+fetch(`${API_URL}/api/users/signin`);
+
 const INITIAL_STATE = {
   isAuthenticated: false,
   user: null,
@@ -13,7 +16,7 @@ export const userAsyncThunk = createAsyncThunk(
   "auth/login",
   async (userCredentials, thunkAPI) => {
     try {
-      const response = await fetch("http://localhost:3000/api/users/signin", {
+      const response = await fetch(`${API_URL}/api/users/signin`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -22,10 +25,36 @@ export const userAsyncThunk = createAsyncThunk(
       });
 
       if (!response.ok) {
-        throw new Error("Invalid credentials");
+        const errorMessage = await response.text();
+        throw new Error(errorMessage || "Invalid credentials");
       }
 
       const data = await response.json();
+      return data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  }
+);
+
+export const registerAsyncThunk = createAsyncThunk(
+  "auth/register",
+  async (userData, thunkAPI) => {
+    try {
+      const response = await fetch(`${API_URL}/api/users/register`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(userData),
+      });
+      if (!response.ok) {
+        const errorMessage = await response.text();
+        throw new Error(errorMessage || "Registration failed");
+      }
+      const data = await response.json();
+      console.log(data);
+
       return data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
@@ -61,6 +90,18 @@ const authSlice = createSlice({
         state.isAuthenticated = false;
         state.user = null;
         state.error = action.payload;
+      })
+      .addCase(registerAsyncThunk.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(registerAsyncThunk.fulfilled, (state, action) => {
+        state.token = action.payload.token || null;
+        state.error = null;
+        state.loading = false;
+      })
+      .addCase(registerAsyncThunk.rejected, (state, action) => {
+        state.error = action.payload;
+        state.loading = false;
       });
   },
 });

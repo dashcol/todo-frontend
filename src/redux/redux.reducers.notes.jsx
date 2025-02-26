@@ -1,5 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
+const API_URL = "http://13.61.181.126:3000";
+
 const INITAIL_STATE = {
   notes: [],
   loading: false,
@@ -12,7 +14,7 @@ export const getAsyncThunk = createAsyncThunk(
     try {
       const state = thunkAPI.getState();
       const token = state.authReducer.token;
-      const response = await fetch("http://localhost:3000/api/notes", {
+      const response = await fetch(`${API_URL}/api/notes`, {
         method: "GET",
         headers: { "Content-Type": "application/json", authorization: token },
       });
@@ -20,8 +22,6 @@ export const getAsyncThunk = createAsyncThunk(
         throw new Error(`HTTP error! Status: ${response.status}`);
       }
       const data = await response.json();
-      console.log(data);
-
       return data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
@@ -35,7 +35,7 @@ export const postAsyncThunk = createAsyncThunk(
     try {
       const state = thunkAPI.getState();
       const token = state.authReducer.token;
-      const response = await fetch("http://localhost:3000/api/notes/add", {
+      const response = await fetch(`${API_URL}/api/notes/add`, {
         method: "POST",
         headers: { "Content-Type": "application/json", authorization: token },
         body: JSON.stringify(note),
@@ -54,7 +54,8 @@ export const deleteAsyncThunk = createAsyncThunk(
     try {
       const state = thunkAPI.getState();
       const token = state.authReducer.token;
-      const response = await fetch(`http://localhost:3000/api/notes/${id}`, {
+
+      const response = await fetch(`${API_URL}/api/notes/${id}`, {
         method: "DELETE",
         headers: { "Content-Type": "application/json", authorization: token },
       });

@@ -4,6 +4,7 @@ import { authReducer } from "../redux.login";
 import storage from "redux-persist/lib/storage";
 import { persistReducer, persistStore } from "redux-persist";
 import { notesReducer } from "../redux.reducers.notes";
+import { weatherReducer } from "../redux.reducers.weather";
 
 const persistConfig = {
   key: "root",
@@ -17,6 +18,7 @@ const store = configureStore({
     notesReducer,
     todoReducer,
     authReducer: persistedAuthReducer,
+    weatherReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
