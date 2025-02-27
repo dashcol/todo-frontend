@@ -1,8 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
-
-const API_URL = "http://13.61.181.126:3000";
-
+const API_URL = "https://13.61.181.126:3000";
 
 const INITIAL_STATE = {
   isloading: false,
@@ -16,16 +14,13 @@ export const WeatherAsyncThunk = createAsyncThunk(
     try {
       const state = thunkAPI.getState();
       const token = state.authReducer.token;
-      const response = await fetch(
-        `${API_URL}/api/weather?city=${city}`,
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            authorization: token,
-          },
-        }
-      );
+      const response = await fetch(`${API_URL}/api/weather?city=${city}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          authorization: token,
+        },
+      });
 
       if (!response.ok) {
         throw new Error("Failed to fetch weather data");

@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
-const API_URL = "http://13.61.181.126:3000";
+const API_URL = "https://13.61.181.126:3000";
 
 const INITIAL_STATE = {
   todos: [],

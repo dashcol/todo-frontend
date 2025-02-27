@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { useState } from "react";
 
-const API_URL = "http://13.61.181.126:3000";
+const API_URL = "https://13.61.181.126:3000";
 fetch(`${API_URL}/api/users/signin`);
 
 const INITIAL_STATE = {
