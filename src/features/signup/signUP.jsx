@@ -48,7 +48,7 @@ export default function SignUp() {
     }
 
     const result = await dispatch(registerAsyncThunk(user));
-    console.log("result", result);
+
     if (result.error) {
       try {
         const payloadData = JSON.parse(

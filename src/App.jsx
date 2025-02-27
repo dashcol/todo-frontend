@@ -10,6 +10,8 @@ import ProtectedRoute from "./features/protect/protect";
 import { PersistGate } from "redux-persist/integration/react";
 import Notes from "./features/notes/notes";
 import Weather from "./features/weather/Weather";
+import ForgotPass from "./features/signIn/forgot-pass/ForgotPass";
+import ChangePass from "./features/signIn/change-pass/ChangePass";
 
 function App() {
   const router = createBrowserRouter([
@@ -19,6 +21,8 @@ function App() {
       children: [
         { index: true, element: <SignIn /> },
         { path: "/signUp", element: <SignUp /> },
+        { path: "/forgot-pass", element: <ForgotPass /> },
+        { path: "/change-pass", element: <ChangePass /> },
         {
           path: "/todos",
           element: (
