@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
-const API_URL = "https://13.61.181.126:3000";
+ const API_URL = "https://gotoo.duckdns.org";;
 
 const INITAIL_STATE = {
   notes: [],

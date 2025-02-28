@@ -1,8 +1,8 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { useState } from "react";
 
-const API_URL = "https://13.61.181.126:3000";
-fetch(`${API_URL}/api/users/signin`);
+const API_URL = "https://gotoo.duckdns.org";
+
 
 const INITIAL_STATE = {
   isAuthenticated: false,
@@ -90,8 +90,6 @@ export const forgotPassThunk = createAsyncThunk(
 export const changePassThunk = createAsyncThunk(
   "change/pass",
   async (data, thunkAPI) => {
-    
-
     try {
       const response = await fetch(`${API_URL}/api/users/change-pass`, {
         method: "POST",
