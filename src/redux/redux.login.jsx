@@ -3,7 +3,6 @@ import { useState } from "react";
 
 const API_URL = "https://gotoo.duckdns.org";
 
-
 const INITIAL_STATE = {
   isAuthenticated: false,
   email: null,
@@ -54,7 +53,6 @@ export const registerAsyncThunk = createAsyncThunk(
         throw new Error(errorMessage || "Registration failed");
       }
       const data = await response.json();
-      console.log(data);
 
       return data;
     } catch (error) {
@@ -132,6 +130,7 @@ const authSlice = createSlice({
         state.isAuthenticated = true;
         state.user = action.payload;
         state.error = null;
+         
       })
       .addCase(userAsyncThunk.rejected, (state, action) => {
         state.loading = false;

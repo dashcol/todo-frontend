@@ -4,6 +4,8 @@ import { authActions, authSelector } from "../../redux/redux.login";
 
 export default function Nav() {
   const { isAuthenticated } = useSelector(authSelector);
+  const { user } = useSelector(authSelector);
+
   const dispatch = useDispatch();
   const handleLogout = () => {
     dispatch(authActions.logout());
@@ -65,11 +67,17 @@ export default function Nav() {
             alt="settings"
             src="https://cdn-icons-png.flaticon.com/128/503/503849.png"
           />
-          <img
-            className="h-6 w-6 cursor-pointer opacity-80 hover:opacity-100 transition-all"
-            alt="profile"
-            src="https://cdn-icons-png.flaticon.com/128/1077/1077063.png"
-          />
+          {isAuthenticated ? (
+            <div className=" cursor-pointer flex items-center justify-center h-10 w-10 rounded-full bg-amber-500 text-white font-bold text-lg">
+              {user.message.charAt(12).toUpperCase()}
+            </div>
+          ) : (
+            <img
+              className="h-6 w-6 cursor-pointer opacity-80 hover:opacity-100 transition-all"
+              alt="profile"
+              src="https://cdn-icons-png.flaticon.com/128/1077/1077063.png"
+            />
+          )}
         </div>
       </div>
       <Outlet />
